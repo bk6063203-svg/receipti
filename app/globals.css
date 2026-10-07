@@ -1,0 +1,352 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   RECEIPTI — Design tokens (Phase 01 foundation)
+   Single source of truth. Tailwind theme maps to these vars.
+   ============================================================ */
+:root {
+  /* Brand palette (fixed — do not invent new brand colors) */
+  --r-background: #f7f7f5;
+  --r-card: #ffffff;
+  --r-primary: #087f5b;
+  --r-primary-hover: #066a4c;
+  --r-primary-active: #05573f;
+  --r-primary-muted: #e6f4ee;
+  --r-on-primary: #ffffff;
+  --r-accent: #20c997;
+  --r-accent-muted: #dcf7ec;
+  --r-on-accent: #06281e;
+  --r-ink: #111111;
+  --r-ink-muted: #6b7280;
+  --r-ink-faint: #9ca3af;
+  --r-line: #e2e8f0;
+  --r-dark: #171717;
+  --r-dark-raised: #222222;
+  --r-dark-line: #2e2e2e;
+  --r-on-dark: #f5f5f4;
+  --r-on-dark-muted: #a8a29e;
+  --r-verified: #16a34a;
+  --r-verified-muted: #dcfce7;
+  --r-danger: #dc2626;
+  --r-danger-muted: #fee2e2;
+  --r-warning: #b45309;
+  --r-warning-muted: #fef3c7;
+  --r-info: #1d4ed8;
+  --r-info-muted: #dbeafe;
+  --r-neutral-muted: #f1f5f9;
+
+  /* Type scale (fluid display, fixed steps below) */
+  --text-display: clamp(2.5rem, 5vw + 1rem, 4rem);
+  --text-h1: clamp(2rem, 3.4vw + 1rem, 2.75rem);
+  --text-h2: clamp(1.5rem, 2.2vw + 0.9rem, 2rem);
+  --text-h3: 1.25rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-caption: 0.75rem;
+  --text-label: 0.75rem;
+
+  /* Layout */
+  --max-w-container: 72rem; /* 1152px */
+  --max-w-narrow: 48rem; /* 768px */
+  --max-w-wide: 88rem; /* 1408px */
+  --section-y: clamp(3rem, 7vw, 5.5rem);
+  --card-pad: clamp(1.25rem, 2.5vw, 2rem);
+
+  /* Depth (subtle, premium) */
+  --shadow-subtle: 0 1px 2px rgb(17 17 17 / 0.04);
+  --shadow-card: 0 1px 2px rgb(17 17 17 / 0.05), 0 8px 24px -12px rgb(17 17 17 / 0.12);
+  --shadow-pop: 0 4px 8px rgb(17 17 17 / 0.06), 0 20px 48px -16px rgb(17 17 17 / 0.22);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-ink font-sans antialiased;
+    font-size: var(--text-body);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--r-accent-muted);
+    color: var(--r-ink);
+  }
+
+  /* Visible, consistent focus for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--r-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Numeric readability: tabular figures everywhere numbers matter */
+  .tnum,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.005em;
+  }
+
+  code,
+  kbd,
+  pre,
+  [data-mono] {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+  }
+
+  /* Respect reduced motion globally */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---- Typography scale ---- */
+  .type-display {
+    font-size: var(--text-display);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .type-h1 {
+    font-size: var(--text-h1);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .type-h2 {
+    font-size: var(--text-h2);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-weight: 650;
+    text-wrap: balance;
+  }
+  .type-h3 {
+    font-size: var(--text-h3);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    font-weight: 600;
+  }
+  .type-body {
+    font-size: var(--text-body);
+    line-height: 1.6;
+  }
+  .type-small {
+    font-size: var(--text-small);
+    line-height: 1.55;
+  }
+  .type-caption {
+    font-size: var(--text-caption);
+    line-height: 1.5;
+  }
+  .type-label {
+    font-size: var(--text-label);
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .type-amount {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .type-status {
+    font-size: var(--text-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ---- Layout primitives ---- */
+  .container-x {
+    width: 100%;
+    max-width: var(--max-w-container);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+  .container-narrow {
+    width: 100%;
+    max-width: var(--max-w-narrow);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+  .section-y {
+    padding-block: var(--section-y);
+  }
+  .card-pad {
+    padding: var(--card-pad);
+  }
+
+  /* ---- Surfaces ---- */
+  .surface-card {
+    background: var(--r-card);
+    border: 1px solid var(--r-line);
+    border-radius: 0.9rem;
+    box-shadow: var(--shadow-subtle);
+  }
+  .surface-dark {
+    background: var(--r-dark);
+    color: var(--r-on-dark);
+    border: 1px solid var(--r-dark-line);
+  }
+
+  /* ---- Dividers ---- */
+  .hr {
+    border: 0;
+    border-top: 1px solid var(--r-line);
+  }
+
+  /* ---- Receipt paper edge (zig-zag) — subtle, reusable ---- */
+  .receipt-edge {
+    --zz: 8px;
+    height: var(--zz);
+    background: linear-gradient(-45deg, transparent 6px, var(--r-card) 0) 0 0 / var(--zz)
+        var(--zz) repeat-x,
+      linear-gradient(45deg, transparent 6px, var(--r-card) 0) calc(var(--zz) / 2) 0 /
+        var(--zz) var(--zz) repeat-x;
+    transform: rotate(180deg);
+  }
+
+  /* ---- Skeleton shimmer ---- */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--r-neutral-muted);
+    border-radius: 0.375rem;
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 0.7),
+      transparent
+    );
+    animation: shimmer 1.6s infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ---- Landing: restrained decorative motion ---- */
+@keyframes flow-y {
+  0% {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(88px);
+    opacity: 0;
+  }
+}
+.animate-flow-y {
+  animation: flow-y 2.6s ease-in-out infinite;
+}
+
+@keyframes scan-y {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(180px);
+    opacity: 0.85;
+  }
+}
+.animate-scan-y {
+  animation: scan-y 2.4s ease-in-out infinite;
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.animate-dash-flow {
+  animation: dash-flow 1.4s linear infinite;
+}
+
+.bg-blueprint {
+  background-image: radial-gradient(circle, rgb(17 17 17 / 0.1) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ---- POS receipt printing: paper fallback prints the record only ---- */
+@media print {
+  body.pos-print > header,
+  body.pos-print > div,
+  body.pos-print header,
+  body.pos-print footer,
+  body.pos-print .pos-no-print {
+    display: none !important;
+  }
+  body.pos-print {
+    background: #fff !important;
+  }
+  body.pos-print main {
+    display: block !important;
+  }
+}
+
+/* ---- Handoff slip printing: the paper slip only ---- */
+@media print {
+  body.slip-print header,
+  body.slip-print footer,
+  body.slip-print .slip-no-print {
+    display: none !important;
+  }
+  body.slip-print {
+    background: #fff !important;
+  }
+  body.slip-print main {
+    display: block !important;
+  }
+}
+
+/* ---- Customer receipt printing: record + verification only ---- */
+@media print {
+  body.receipt-print header,
+  body.receipt-print footer,
+  body.receipt-print .no-print {
+    display: none !important;
+  }
+  body.receipt-print {
+    background: #fff !important;
+  }
+}
